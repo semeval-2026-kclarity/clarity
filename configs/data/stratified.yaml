@@ -1,0 +1,49 @@
+# Stratified Data Configuration
+# Maintains label distribution using dual stratification (clarity + evasion)
+
+dataset:
+  name: "ailsntua/QEvasion"
+  source: "huggingface"
+  cache_dir: null
+  trust_remote_code: true
+
+# Stratified splitting configuration
+splitting:
+  method: "stratified"
+  create_custom_splits: true
+
+  # Split ratios
+  train_ratio: 0.8
+  val_ratio: 0.2
+
+  # Dual stratification (both clarity and evasion levels)
+  dual_stratification: true
+  stratify_by: ["clarity_label", "evasion_label"]
+
+  # Stratification weights (how much to prioritize each level)
+  stratification_weights:
+    clarity: 1.0      # Weight for clarity-level balance
+    evasion: 2.0      # Weight for evasion-level balance (prioritize fine-grained)
+    size: 5.0         # Weight for matching target split size
+
+  # Random seed for reproducibility
+  random_seed: 42
+
+# Basic preprocessing
+preprocessing:
+  clean_text: false
+  remove_extra_whitespace: false
+  drop_missing_labels: true
+  drop_missing_text: true
+
+# Data validation
+validation:
+  check_label_distribution: true
+  check_president_overlap: false
+
+# No augmentation or sampling
+augmentation:
+  enabled: false
+
+sampling:
+  enabled: false

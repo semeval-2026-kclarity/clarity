@@ -1,0 +1,70 @@
+# RoBERTa Base + Task A Experiment Configuration
+# Standard fine-tuning for ambiguity detection (no special techniques)
+
+experiment_name: "roberta_base_task_a_stratified_qa_marked"
+description: "RoBERTa base fine-tuned for ambiguity detection (Task A) - standard training + stratified splits"
+experiment_type: "fine_tuning"
+
+# Reference to other config files
+model_config: "configs/models/encoders/roberta_base.yaml"
+task_config: "configs/tasks/task_a.yaml"
+data_config: "configs/data/stratified.yaml"
+
+preprocessing:
+  masking_mode: "none" # none | naive | entity_aware
+
+input_format: "qa_marked"       # explicit [QUESTION] and [ANSWER] markers
+
+# Training hyperparameters
+training:
+  # Enable bf16 to reduce GPU memory usage on A100; required for roberta-large with current batch/sequence settings
+  bf16: true
+  fp16: false
+
+  # Reduce non-determinism between runs
+  dataloader_num_workers: 0
+
+  num_train_epochs: 20
+  learning_rate: 2e-5
+  warmup_ratio: 0.1
+  weight_decay: 0.01
+
+  # Batch sizes
+  per_device_train_batch_size: 32
+  per_device_eval_batch_size: 32
+  gradient_accumulation_steps: 1
+
+  # Evaluation strategy
+  eval_strategy: "epoch"
+  save_strategy: "epoch"
+  logging_steps: 100
+
+  # Early stopping and model selection
+  load_best_model_at_end: true
+  metric_for_best_model: "eval_f1_macro"
+  greater_is_better: true
+  save_total_limit: 1
+  early_stopping_patience: 5
+  early_stopping_threshold: 0.001
+
+# Class weighting - DISABLED for standard training
+class_weights:
+  use_weighted_loss: false
+  method: null
+  manual_weights: null
+  warmup_epochs: 0
+
+# Output directories
+output_dir: "${MODEL_OUTPUTS_DIR}/task_a/{experiment_name}"
+logging_dir: "${MODEL_OUTPUTS_DIR}/task_a/{experiment_name}/logs"
+
+# Experiment tracking
+tracking:
+  use_wandb: true
+  wandb_run_name: "{experiment_name}"
+
+seed_control:
+  mode: "multi"   # single | multi
+  # seed: 42         # used if mode=single
+  seeds: [13, 21, 42]  # used if mode=multi
+

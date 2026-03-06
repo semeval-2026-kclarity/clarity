@@ -1,0 +1,26 @@
+# RoBERTa Base Model Configuration
+
+# Model identification
+model_name: "roberta-base"
+model_type: "roberta"
+architecture: "roberta_classifier"
+
+# Tokenization settings
+tokenization:
+  max_length: 512
+  padding: "max_length"
+  truncation: true
+  return_special_tokens_mask: false
+
+# Model architecture settings
+model_params:
+  hidden_dropout_prob: 0.1
+  attention_probs_dropout_prob: 0.1
+  classifier_dropout: 0.1
+
+# Model loading settings
+loading:
+  trust_remote_code: false
+  use_auth_token: false
+  #cache_dir: null
+  cache_dir: "${MODEL_CACHE_DIR}"

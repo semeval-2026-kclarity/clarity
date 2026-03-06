@@ -1,0 +1,9 @@
+{
+  "files.watcherExclude": {
+    "**/wandb/**": true,
+    "**/outputs/**": true,
+    "**/.git/**": true,
+    "**/venv/**": true,
+    "**/__pycache__/**": true
+  }
+}

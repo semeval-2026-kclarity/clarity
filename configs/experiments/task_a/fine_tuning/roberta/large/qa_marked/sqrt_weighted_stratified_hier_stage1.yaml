@@ -1,0 +1,58 @@
+experiment_name: "roberta_large_task_a_sqrt_weighted_stratified_qa_marked_hier_stage1"
+description: "Hierarchical Task A - Stage 1 (Ambivalent vs Not-Ambivalent)"
+experiment_type: "fine_tuning"
+
+model_config: "configs/models/encoders/roberta_large.yaml"
+task_config: "configs/tasks/task_a.yaml"
+data_config: "configs/data/stratified.yaml"
+
+preprocessing:
+  masking_mode: "none"
+
+input_format: "qa_marked"
+
+hierarchical:
+  enabled: true
+  stage: 1
+  ambivalent_label: "Ambivalent"
+  clear_label: "Clear Reply"
+  nonreply_label: "Clear Non-Reply"
+
+training:
+  bf16: true
+  fp16: false
+  dataloader_num_workers: 0
+  num_train_epochs: 20
+  learning_rate: 2e-5
+  warmup_ratio: 0.1
+  weight_decay: 0.01
+  per_device_train_batch_size: 32
+  per_device_eval_batch_size: 32
+  gradient_accumulation_steps: 1
+  eval_strategy: "epoch"
+  save_strategy: "epoch"
+  logging_steps: 100
+  load_best_model_at_end: true
+  metric_for_best_model: "eval_f1_macro"
+  greater_is_better: true
+  save_total_limit: 1
+  early_stopping_patience: 5
+  early_stopping_threshold: 0.001
+
+class_weights:
+  use_weighted_loss: true
+  method: "sqrt" # Automatically compute weights based on class frequencies
+  manual_weights: null
+  warmup_epochs: 0
+
+output_dir: "${MODEL_OUTPUTS_DIR}/task_a/{experiment_name}"
+logging_dir: "${MODEL_OUTPUTS_DIR}/task_a/{experiment_name}/logs"
+
+tracking:
+  use_wandb: true
+  wandb_run_name: "{experiment_name}"
+
+seed_control:
+  mode: "single"
+  seed: 13
+  seeds: [13, 21, 42]

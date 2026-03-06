@@ -1,0 +1,43 @@
+# Base Data Configuration - Random Splitting
+# Simple baseline without any stratification
+
+dataset:
+  name: "ailsntua/QEvasion"
+  source: "huggingface"
+  cache_dir: null
+  trust_remote_code: true
+
+# Random splitting configuration
+splitting:
+  method: "random"
+  create_custom_splits: true
+
+  # Split ratios
+  train_ratio: 0.8
+  val_ratio: 0.2
+
+  # Random seed for reproducibility
+  random_seed: 42
+
+# Basic preprocessing
+preprocessing:
+  # Text cleaning
+  # CLARIFICATION - Dataset already clean
+  clean_text: False
+  remove_extra_whitespace: False
+
+  # Handle missing data
+  drop_missing_labels: true
+  drop_missing_text: true
+
+# Data validation
+validation:
+  check_label_distribution: true
+  check_president_overlap: false # Not applicable for random split
+
+# No augmentation or sampling
+augmentation:
+  enabled: false
+
+sampling:
+  enabled: false

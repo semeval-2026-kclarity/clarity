@@ -1,0 +1,23 @@
+/.ipynb_checkpoints/
+/data-augmentation/HF_token.txt
+/wandb/
+.idea/
+
+# Environment vars
+.env
+
+# Python virtual environment
+venv/
+.venv/
+
+# Cache
+__pycache__/
+*.pyc
+**/__pycache__/
+
+# Data
+/data/raw
+/data/processed
+
+# Paper
+paper_artifacts

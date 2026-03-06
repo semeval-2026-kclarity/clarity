@@ -1,0 +1,33 @@
+# CLARITY SemEval-2026 Competition
+# Task A: Ambiguity Detection Configuration
+
+# Basic task information
+task_name: "task_a"
+task_description: "Ambiguity Detection - Clear Reply vs Ambivalent vs Clear Non-Reply"
+task_type: "classification"
+competition: "clarity-semeval2026"
+
+# Task-specific data configuration
+data:
+  text_column: "interview_answer"
+  text_pair_column: "question"
+  label_column: "clarity_label"
+
+# Label configuration
+labels:
+  num_labels: 3
+  label_names: ["Clear Reply", "Ambivalent", "Clear Non-Reply"]
+  label2id:
+    "Clear Reply": 0
+    "Ambivalent": 1
+    "Clear Non-Reply": 2
+  id2label:
+    0: "Clear Reply"
+    1: "Ambivalent"
+    2: "Clear Non-Reply"
+
+# Evaluation configuration
+evaluation:
+  primary_metric: "f1_macro"
+  secondary_metrics:
+    ["accuracy", "precision_macro", "recall_macro", "f1_weighted"]

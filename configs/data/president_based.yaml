@@ -1,0 +1,56 @@
+# President-Based Data Configuration
+# Ensures no president overlap between train/validation
+# Uses dual stratification to balance both label levels
+
+dataset:
+  name: "ailsntua/QEvasion"
+  source: "huggingface"
+  cache_dir: null
+  trust_remote_code: true
+
+# President-based splitting configuration
+splitting:
+  method: "president_based"
+  create_custom_splits: true
+
+  # Split ratios
+  train_ratio: 0.8
+  val_ratio: 0.2
+
+  # Group-based splitting (no president overlap)
+  group_split_by: "president"
+
+  # Dual stratification (both clarity and evasion levels)
+  dual_stratification: true
+  stratify_by: ["clarity_label", "evasion_label"]
+
+  # Stratification weights for optimization
+  stratification_weights:
+    clarity: 1.0      # Weight for clarity-level balance
+    evasion: 2.0      # Weight for evasion-level balance
+    size: 5.0         # Weight for matching target split size
+
+  # Optimization parameters
+  max_presidents_in_val: 5  # Limit search space (try up to 5 presidents in validation)
+
+  # Random seed for reproducibility
+  random_seed: 42
+
+# Basic preprocessing
+preprocessing:
+  clean_text: false
+  remove_extra_whitespace: false
+  drop_missing_labels: true
+  drop_missing_text: true
+
+# Data validation
+validation:
+  check_label_distribution: true
+  check_president_overlap: true  # Ensure no overlap
+
+# No augmentation or sampling
+augmentation:
+  enabled: false
+
+sampling:
+  enabled: false

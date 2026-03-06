@@ -1,0 +1,96 @@
+# Task B: Evasion Type Classification Configuration
+
+task_name: "task_b"
+description: "Fine-grained classification of evasion techniques used in political responses"
+task_type: "classification"
+competition: "clarity-semeval2026"
+
+# Task-specific data columns
+data:
+  text_column: "interview_answer" # Answer text
+  text_pair_column: "question" # Question text
+  label_column: "evasion_label" # Label column name in dataset
+
+# Label configuration - 9 evasion categories with hierarchical mapping
+labels:
+  num_labels: 9
+
+  # Fine-grained evasion labels
+  label2id:
+    "Explicit": 0
+    "Implicit": 1
+    "Dodging": 2
+    "General": 3
+    "Deflection": 4
+    "Partial/half-answer": 5
+    "Declining to answer": 6
+    "Claims ignorance": 7
+    "Clarification": 8
+
+  id2label:
+    0: "Explicit"
+    1: "Implicit"
+    2: "Dodging"
+    3: "General"
+    4: "Deflection"
+    5: "Partial/half-answer"
+    6: "Declining to answer"
+    7: "Claims ignorance"
+    8: "Clarification"
+
+  # Hierarchical mapping to Task A (clarity level)
+  # Maps each evasion label to its parent clarity category
+  evasion_to_clarity:
+    "Explicit": "Clear Reply"
+    "Implicit": "Ambivalent"
+    "Dodging": "Ambivalent"
+    "General": "Ambivalent"
+    "Deflection": "Ambivalent"
+    "Partial/half-answer": "Ambivalent"
+    "Declining to answer": "Clear Non-Reply"
+    "Claims ignorance": "Clear Non-Reply"
+    "Clarification": "Clear Non-Reply"
+
+  # Alternative: ID-based mapping (0-indexed)
+  evasion_id_to_clarity_id:
+    0: 0 # explicit -> clear_reply
+    1: 1 # implicit -> ambivalent
+    2: 1 # dodging -> ambivalent
+    3: 1 # general -> ambivalent
+    4: 1 # deflection -> ambivalent
+    5: 1 # Partial/half-answer -> ambivalent
+    6: 2 # Declining to answer -> clear_non_reply
+    7: 2 # Claims ignorance -> clear_non_reply
+    8: 2 # Clarification -> clear_non_reply
+
+  # Clarity labels (for reference)
+  clarity_labels:
+    label2id:
+      "Clear Reply": 0
+      "Ambivalent": 1
+      "Clear Non-Reply": 2
+    id2label:
+      0: "Clear Reply"
+      1: "Ambivalent"
+      2: "Clear Non-Reply"
+
+  # Group evasion labels by clarity category
+  clarity_groups:
+    Clear Reply:
+      - "Explicit"
+    Ambivalent:
+      - "Implicit"
+      - "Dodging"
+      - "General"
+      - "Deflection"
+      - "Partial/half-answer"
+    Clear Non-Reply:
+      - "Declining to answer"
+      - "Claims ignorance"
+      - "Clarification"
+
+# Evaluation configuration
+evaluation:
+  primary_metric: "f1_macro"
+  secondary_metrics:
+    ["accuracy", "precision_macro", "recall_macro", "f1_weighted"]
