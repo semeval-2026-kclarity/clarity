@@ -160,13 +160,17 @@ The pipeline is designed to be modular:
 
 ## Citation
 
+If you use this repository, please cite our paper:
+
 ```bibtex
-@inproceedings{sage-greco-2026-kclarity,
-    title     = "{KCL}arity at {S}em{E}val-2026 Task 6: Encoder and Zero-Shot Approaches to Political Evasion Detection",
-    author    = "Sage, Archie and Greco, Salvatore",
-    booktitle = "Proceedings of the 20th International Workshop on Semantic Evaluation (SemEval-2026)",
-    year      = "2026",
-    publisher = "Association for Computational Linguistics"
+@misc{sage2026kclaritysemeval2026task6,
+  title        = {KCLarity at SemEval-2026 Task 6: Encoder and Zero-Shot Approaches to Political Evasion Detection},
+  author       = {Archie Sage and Salvatore Greco},
+  year         = {2026},
+  eprint       = {2603.06552},
+  archivePrefix= {arXiv},
+  primaryClass = {cs.CL},
+  url          = {https://arxiv.org/abs/2603.06552}
 }
 ```
 
