@@ -5,7 +5,7 @@ This repository contains the code for the KCLarity team's participation in the [
 **Authors:** [Archie Sage](mailto:archie.sage@kcl.ac.uk)\* and [Salvatore Greco](mailto:salvatore.greco@kcl.ac.uk)\* (King's College London)
 *\*Equal contribution.*
 
-**Paper:** *KCLarity at SemEval-2026 Task 6: Encoder and Zero-Shot Approaches to Political Evasion Detection*
+**Paper:** [*KCLarity at SemEval-2026 Task 6: Encoder and Zero-Shot Approaches to Political Evasion Detection*](https://arxiv.org/abs/2603.06552)
 
 ## Repository Structure
 
